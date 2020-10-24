@@ -1,0 +1,17 @@
+{
+  "name": "im-server",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node --no-warnings ./src/index.js"
+  },
+  "author": "Olivier Parent",
+  "license": "ISC",
+  "dependencies": {
+    "cannon": "^0.6.2",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "type": "module"
+}
