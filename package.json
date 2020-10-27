@@ -9,7 +9,7 @@
   "author": "Olivier Parent",
   "license": "ISC",
   "dependencies": {
-    "cannon": "^0.6.2",
+    "cannon-es": "^0.15.1",
     "express": "^4.17.1",
     "socket.io": "^2.3.0"
   },

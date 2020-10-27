@@ -1,4 +1,4 @@
-import CANNON from "cannon";
+import CANNON from "cannon-es";
 
 const GRAVITATIONAL_ACCELERATION = 9.807;
 
