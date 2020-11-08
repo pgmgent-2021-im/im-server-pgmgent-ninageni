@@ -1,15 +1,17 @@
 import express from "express";
 import http from "http";
 import path from "path";
-import socketIO from "socket.io";
+import { Server } from "socket.io";
 
 import { Odometer } from "./Odometer.js";
 import { Speedometer } from "./Speedometer.js";
 
 const app = express();
-const server = http.createServer(app);
-const io = socketIO(server, {
-  origins: "*:*",
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: true,
+  },
   serveClient: false,
 });
 
@@ -19,7 +21,7 @@ app.get("/", (req, res) => {
 });
 
 const PORT = 3001;
-server.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.info(
     `Server started, listening on *:${PORT}, check status on http://localhost:${PORT}/`
   );
