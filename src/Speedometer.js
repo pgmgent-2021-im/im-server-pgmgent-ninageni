@@ -24,7 +24,7 @@ export class Speedometer {
 
   fake() {
     const minSpeed = 0;
-    const maxSpeed = 250;
+    const maxSpeed = 999;
 
     this.speed += this.#acceleration * this.#direction;
 

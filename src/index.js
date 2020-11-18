@@ -3,7 +3,6 @@ import http from "http";
 import path from "path";
 import { Server } from "socket.io";
 
-import { Odometer } from "./Odometer.js";
 import { Speedometer } from "./Speedometer.js";
 
 const app = express();
@@ -27,20 +26,19 @@ httpServer.listen(PORT, () => {
   );
 });
 
-const SIMULATE = false;
+const LOGGING = true;
 const INTERVAL = 100; // milliseconds
+const SIMULATE = true;
 const timeStart = Date.now();
-const odometer0 = new Odometer(timeStart);
-const speedometer0 = new Speedometer(timeStart);
+const speedometer = new Speedometer(timeStart);
 io.on("connection", (socket) => {
   console.log("A user connected.");
   setInterval(() => {
     const timeCurrent = Date.now();
-    socket.broadcast.volatile.emit("telemetry", {
-      distance: SIMULATE ? odometer0.simulate(timeCurrent) : odometer0.fake(),
-      speed: SIMULATE
-        ? speedometer0.simulate(timeCurrent)
-        : speedometer0.fake(),
-    });
+    const data = {
+      speed: SIMULATE ? speedometer.simulate(timeCurrent) : speedometer.fake(),
+    };
+    if (LOGGING) console.log(data);
+    socket.broadcast.volatile.emit("telemetry", data);
   }, INTERVAL);
 });
