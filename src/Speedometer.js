@@ -1,17 +1,18 @@
-import CANNON from "cannon-es";
+import { Vehicle } from "./Vehicle.js";
 
-const GRAVITATIONAL_ACCELERATION = 9.807;
+const MAX_SPEED = 250;
+const MIN_SPEED = 0;
+const SPEED_ACCELERATE = 1;
+const SPEED_DECELERATE = -1;
+const SPEED_INCREMENT = 0.45;
 
 export class Speedometer {
-  #acceleration = 1.6;
-  #direction = 1;
-  #speed = 0;
-  #time;
-  #world = new CANNON.World();
+  #direction = SPEED_ACCELERATE;
+  #speed;
+  #vehicle;
 
   constructor(time = Date.now()) {
-    this.#time = time;
-    this.#world.gravity.set(0, 0, -GRAVITATIONAL_ACCELERATION);
+    this.#vehicle = new Vehicle(time);
   }
 
   get speed() {
@@ -19,26 +20,37 @@ export class Speedometer {
   }
 
   set speed(speed) {
-    this.#speed = speed;
+    this.#speed = speed * 3.6; // m/s -> km/h
   }
 
+  /**
+   * Fake
+   * Fake data using simple formula.
+   */
   fake() {
-    const minSpeed = 0;
-    const maxSpeed = 999;
+    this.speed += SPEED_INCREMENT * this.#direction;
 
-    this.speed += this.#acceleration * this.#direction;
-
-    if (this.speed < minSpeed) {
-      this.speed = minSpeed;
-      this.#direction = 1;
-    } else if (maxSpeed < this.speed) {
-      this.speed = maxSpeed;
-      this.#direction = -1;
+    if (this.speed < MIN_SPEED) {
+      this.speed = MIN_SPEED;
+      this.#direction = SPEED_ACCELERATE;
+    } else if (MAX_SPEED < this.speed) {
+      this.speed = MAX_SPEED;
+      this.#direction = SPEED_DECELERATE;
     }
+
     return this.speed;
   }
 
-  simulate() {
+  /**
+   * Simulate
+   * Simulate data using physics engine.
+   *
+   * @param {Date} time
+   */
+  simulate(time) {
+    this.#vehicle.simulate(time);
+    this.speed = this.#vehicle.speed;
+
     return this.speed;
   }
 }
