@@ -4,8 +4,8 @@ const AIR_DENSITY = 1.22; // Rho, kg/m^3
 const DRAG_COEFFICIENT = 0.4; // Cd
 const ENGINE_FORCE = 1500; // N
 const FRONTAL_AREA = 0.8; // m^2
-const GRAVITATIONAL_ACCELERATION = 9.807; // m/s^2
-const OBJECT_MASS = 1350; // kg
+const GRAVITATIONAL_ACCELERATION = 36284; // m/s^2
+const OBJECT_MASS = 10000; // kg
 
 export class Vehicle {
   #ground;
